@@ -1,0 +1,2 @@
+<?php
+$mysqli = new mysqli("your_db_server", "your_db_username", "your_db_password", "your_db");
