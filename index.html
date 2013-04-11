@@ -1,28 +1,3 @@
-<?php
-require('includes/db.config.php');
-
-
-
-$mysqli->real_query("SELECT * FROM hardware ORDER BY name ASC");
-$res = $mysqli->use_result();
-
-$hardwareArray = array();
-
-if ($res) {
-	while ($row = $res->fetch_assoc()) {
-    	$hardwareArray[$row['id']] = $row['name'];
-	}
-}else{
-	die('There has been a database error');
-}
-
-
-
-require('includes/calendar.php');
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -96,39 +71,22 @@ require('includes/calendar.php');
       <div class="row">
         <div class="span9">
           <h2>Current bookings</h2>
-          <?php
 
-          	$thismonth = date('n');
-          	$textmonth = date('F');
-          	$thisyear = date('Y');
-
-          	echo '<h4>'.$textmonth.' '.$thisyear.'</h4>';
-
-			echo draw_calendar($thismonth,$thisyear);
-
-
-
-			?>
-          <p><small><strong>Once a booking has been finalised, you will need to contact Jim, Keith or John to amend an entry.</strong></small></p>
+			<div id="render-calendar"><p style="text-align:center;"><img src="assets/img/loading.gif"></p></div>
+          	<p><small><strong>Once a booking has been finalised, you will need to contact Jim, Keith or John to amend an entry.</strong></small></p>
         </div>
 
         <div class="span3">
           <h2>Equipment</h2>
 
-          <ul><?php
-          	foreach ($hardwareArray as $key => $value) {
-          			echo '<li>'.$value.'</li>';
-          		}
-          ?></ul>
-
-          <p><a class="btn btn-primary" href="#">Book &raquo;</a></p>
+          <p><a class="btn btn-primary" id="make-booking" href="#">Book &raquo;</a></p>
         </div>
       </div>
 
       <hr>
 
       <footer>
-        <p>&copy; SPU <?php echo date('Y'); ?></p>
+        <p>&copy; SPU 2013</p>
       </footer>
 
     </div> <!-- /container -->
@@ -169,5 +127,3 @@ require('includes/calendar.php');
 
   </body>
 </html>
-<?php
-$mysqli->close();

@@ -1,5 +1,24 @@
 <?php
-/* draws a calendar */
+require('db.config.php');
+
+
+
+$mysqli->real_query("SELECT * FROM hardware ORDER BY name ASC");
+$res = $mysqli->use_result();
+
+$hardwareArray = array();
+
+if ($res) {
+	while ($row = $res->fetch_assoc()) {
+    	$hardwareArray[$row['id']] = $row['name'];
+	}
+}else{
+	die('There has been a database error');
+}
+
+
+
+
 function draw_calendar($month,$year){
 	global $hardwareArray, $mysqli;
 	/* draw table */
@@ -84,3 +103,56 @@ function draw_calendar($month,$year){
 	/* all done, return result */
 	return $calendar;
 }
+
+
+if (!isset($_POST['date'])) {
+	$thismonth = date('n');
+	$thisyear = date('Y');
+
+}else{
+
+	$theDate = explode("**//**", $_POST['date']);
+	$thismonth = $theDate[0];
+	$thisyear = $theDate[1];
+
+	switch ($_POST['which']) {
+		case 'prev':
+			if($thismonth == 1){
+				$thismonth = 12;
+				$thisyear = $theDate[1]-1;
+			}else{
+				$thismonth--;
+			}
+			break;
+
+		case 'next':
+			if($thismonth == 12){
+				$thismonth = 1;
+				$thisyear = $theDate[1]+1;
+			}else{
+				$thismonth++;
+			}
+			break;
+
+		default:
+			die();
+			break;
+	}
+
+
+
+
+
+}
+
+
+
+$textmonth = date('F', mktime(0, 0, 0, $thismonth, 1, $thisyear));
+
+echo '<div style="text-align:center;"><a class="btn" id="previous-month" data-date="'.$thismonth.'**//**'.$thisyear.'" href="#"><i class="icon-chevron-left"></i></a> <span style="font-size:1.3em; font-weight:bolder;">'.$textmonth.' '.$thisyear.'</span> <a class="btn" id="next-month" data-date="'.$thismonth.'**//**'.$thisyear.'" href="#"><i class="icon-chevron-right"></i></a></div>';
+
+echo '<br>';
+
+echo draw_calendar($thismonth,$thisyear);
+
+$mysqli->close();
