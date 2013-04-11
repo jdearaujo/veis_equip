@@ -43,7 +43,7 @@ function draw_calendar($month,$year){
 			if ($result = $mysqli->query("SELECT * FROM `bookings` WHERE (`start` = '".$sqlDate."' OR `end` = '".$sqlDate."') OR (`start` < '".$sqlDate."' AND `end` > '".$sqlDate."')")) {
 				if ($result->num_rows > 0) {
 					while ($row = $result->fetch_assoc()) {
-				    	$calendar.= '<span class="label label-info event">'.$hardwareArray[$row['hardwareId']].'</span><br>';
+				    	$calendar.= '<span class="label label-info event" data-eventid="'.$row['id'].'">'.$hardwareArray[$row['hardwareId']].'</span><br>';
 					}
 				}else{
 					$calendar.= str_repeat('<p>&nbsp;</p>',3);

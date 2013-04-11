@@ -1,10 +1,6 @@
 <?php
 require('includes/db.config.php');
 
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
-
 
 
 $mysqli->real_query("SELECT * FROM hardware ORDER BY name ASC");
@@ -125,7 +121,7 @@ require('includes/calendar.php');
           		}
           ?></ul>
 
-          <p><a class="btn" href="#">Book &raquo;</a></p>
+          <p><a class="btn btn-primary" href="#">Book &raquo;</a></p>
         </div>
       </div>
 
@@ -137,25 +133,38 @@ require('includes/calendar.php');
 
     </div> <!-- /container -->
 
+
+
+
+<!-- MODAL -->
+
+<div id="event-modal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>Modal Body</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn">Close</a>
+  </div>
+</div>
+
+
+<!-- /MODAL -->
+
+
+
+
+
+
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-
-    <script type="text/javascript">
-    	$(".event").hover(
-		  function () {
-		    $(this).removeClass('label-info').addClass('label-warning');
-		  },
-		  function () {
-		    $(this).removeClass('label-warning').addClass('label-info');
-		  }
-		);
-
-		$(document).on("click", ".event", function(){ alert("Goodbye!"); });
-
-    </script>
+    <script src="assets/js/global.js"></script>
 
 
   </body>
