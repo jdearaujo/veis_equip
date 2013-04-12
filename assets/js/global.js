@@ -30,10 +30,9 @@ function initSystemFunctions() {
 			$('.modal-body').html('<p style="text-align:center;"><img src="assets/img/loading.gif"></p>');
 			$('#event-modal').modal();
 
-			// $.post("includes/calendar.php", { date: date, which: 'prev' }).done(function(data) {
-			//   $('#render-calendar').html(data);
-			//   initSystemFunctions();
-			// });
+			$.post("includes/addBooking.php").done(function(data) {
+			  $('.modal-body').html(data);
+			});
 
 		});
 

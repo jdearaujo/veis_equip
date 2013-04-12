@@ -10,3 +10,8 @@ div.day-number		{ background:#999; padding:5px; color:#fff; font-weight:bold; po
 /* shared */
 td.calendar-day, td.calendar-day-np { width:120px; padding:5px; border-bottom:1px solid #999; border-right:1px solid #999; }
 .event {cursor: pointer;}
+
+.already-booked {
+	color: red;
+	text-decoration: line-through;
+}
