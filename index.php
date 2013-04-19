@@ -1,3 +1,19 @@
+<?php
+require('includes/db.config.php');
+
+$mysqli->real_query("SELECT * FROM hardware ORDER BY name ASC");
+$res = $mysqli->use_result();
+
+$hardwareArray = array();
+
+if ($res) {
+  while ($row = $res->fetch_assoc()) {
+      $hardwareArray[$row['id']] = $row['name'];
+  }
+}else{
+  die('There has been a database error');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,9 +33,10 @@
     </style>
     <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="assets/css/calendar.css" rel="stylesheet">
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+   <link href="assets/css/datepicker.css" rel="stylesheet">    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons -->
@@ -41,25 +58,6 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="#">Equipment booking - SPU</a>
-<!--           <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div> -->
         </div>
       </div>
     </div>
@@ -79,7 +77,36 @@
         <div class="span3">
           <h2>Equipment</h2>
 
-          <p><a class="btn btn-primary" id="make-booking" href="#">Book &raquo;</a></p>
+
+        <form id="equipment-booking-form">
+          <fieldset>
+
+            <label>From:</label>
+            <input type="text" name="from" id="from" placeholder="" class="text input-datepicker" readonly>
+            <label>To:</label>
+            <input type="text" name="to" id="to" placeholder="" class="text input-datepicker" readonly>
+
+          <label>Reason:</label>
+            <input class="input-xlarge" type="text" name="reason" id="reason" placeholder="Reason for booking">
+            <span class="help-block">Select the equipment you require.</span>
+            <?php
+
+            $rowCounter = 0;
+            foreach ($hardwareArray as $key => $value) {
+
+              echo '<label class="checkbox">';
+              echo '<input type="checkbox" name="hardware" id="hardware-'.$key.'" value="'.$key.'"> '.$value;
+              echo '</label>';
+
+            }
+
+            ?>
+            <ul id="error-list"></ul>
+            <button type="submit" id="submit-button" class="btn btn-primary">Confirm booking</button>
+          </fieldset>
+        </form>
+
+
         </div>
       </div>
 
@@ -122,6 +149,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
     <script src="assets/js/global.js"></script>
 
 

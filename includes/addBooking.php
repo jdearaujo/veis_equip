@@ -15,12 +15,11 @@ if ($res) {
 }
 ?>
 
-
 <form id="equipment-booking-form">
   <fieldset>
 
     <label>From:</label>
-    <input type="date" name="from" id="from" placeholder="">
+    <input type="input" name="from" id="from" placeholder="" class="datepicker">
     <label>To:</label>
     <input type="date" name="to" id="to" placeholder="">
 
@@ -46,6 +45,7 @@ if ($res) {
 
 
 <script type="text/javascript">
+
 
 $("input[type='date']").change(function() {
 
@@ -133,6 +133,8 @@ $.post("includes/addBooking_db.php", {dateFrom: dateFrom, dateTo: dateTo, reason
 
 
 });
+
+
 
 </script>
 
