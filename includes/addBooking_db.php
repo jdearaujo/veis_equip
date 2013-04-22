@@ -1,22 +1,28 @@
 <?php
 require('db.config.php');
 
-if(!isset($_POST['dateFrom']) || !isset($_POST['dateTo']) || !isset($_POST['reason']) || !isset($_POST['checkedEquipment'])){
-	die('System error');
+if(!isset($_POST['dateFrom']) || !isset($_POST['dateTo']) || !isset($_POST['reason']) || !isset($_POST['checkedEquipment']) || !isset($_POST['who'])){
+	die('0');
+}
+
+if($_POST['dateTo'] == ''){
+	$_POST['dateTo'] = $_POST['dateFrom'];
+}
+
+foreach ($_POST['checkedEquipment'] as $value) {
+
+	$mysqli->query("INSERT INTO `bookings` (`hardwareId`, `start`,`end`,`who`,`where`) VALUES ('".$value."', '".$_POST['dateFrom']."', '".$_POST['dateTo']."', '".addslashes($_POST['who'])."', '".addslashes($_POST['reason'])."')");
 }
 
 
 
-$mysqli->real_query("SELECT * FROM `bookings` WHERE (`start` = '".$_POST['dateToCheck']."' OR `end` = '".$_POST['dateToCheck']."') OR (`start` < '".$_POST['dateToCheck']."' AND `end` > '".$_POST['dateToCheck']."')");
 
+$res = $mysqli->insert_id;
+echo $mysqli->error;
 
-$res = $mysqli->use_result();
+if ($res>0) {
 
-
-if ($res) {
-	while ($row = $res->fetch_assoc()) {
-    	echo $row['hardwareId'].'//**//';
-	}
+	echo '1';
 
 
 

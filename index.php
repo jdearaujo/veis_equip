@@ -85,7 +85,8 @@ if ($res) {
             <input type="text" name="from" id="from" placeholder="" class="text input-datepicker" readonly>
             <label>To:</label>
             <input type="text" name="to" id="to" placeholder="" class="text input-datepicker" readonly>
-
+            <label>Booked by:</label>
+            <input class="input-xlarge" type="text" name="who" id="who" placeholder="Booked by:">
           <label>Reason:</label>
             <input class="input-xlarge" type="text" name="reason" id="reason" placeholder="Reason for booking">
             <span class="help-block">Select the equipment you require.</span>
@@ -95,7 +96,7 @@ if ($res) {
             foreach ($hardwareArray as $key => $value) {
 
               echo '<label class="checkbox">';
-              echo '<input type="checkbox" name="hardware" id="hardware-'.$key.'" value="'.$key.'"> '.$value;
+              echo '<input class="hardware" type="checkbox" name="hardware" id="hardware-'.$key.'" value="'.$key.'"> '.$value;
               echo '</label>';
 
             }

@@ -55,10 +55,11 @@ $("input[type='date']").change(function() {
 	$(".booked").remove();
 
 
-	var dateToCheck = $(this).val();
+	var dateFrom = $("#from").val();
+  var dateTo = $("#to").val();
 
 
-	$.post("includes/dateCheck.php", { dateToCheck: dateToCheck }).done(function(data) {
+	$.post("includes/dateCheck.php", { dateFrom: dateFrom, dateTo: dateTo }).done(function(data) {
 
 		if(data.length>0){
 

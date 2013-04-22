@@ -22,10 +22,11 @@ $(".input-datepicker").on('changeDate', function() {
 	$(".booked").remove();
 
 
-	var dateToCheck = $(this).val();
+	var dateFrom = $("#from").val();
+  	var dateTo = $("#to").val();
 
 
-	$.post("includes/dateCheck.php", { dateToCheck: dateToCheck }).done(function(data) {
+	$.post("includes/dateCheck.php", { dateFrom: dateFrom, dateTo: dateTo }).done(function(data) {
 
 		if(data.length>0){
 
@@ -42,6 +43,9 @@ $(".input-datepicker").on('changeDate', function() {
 
 
 	});
+
+
+	$('.input-datepicker').datepicker('hide');
 });
 
 
@@ -53,6 +57,7 @@ $('#equipment-booking-form').submit(function(e) {
   var dateFrom = $("#from").val();
   var dateTo = $("#to").val();
   var reason = $("#reason").val();
+  var who = $("#who").val();
 
   var checkedEquipment = new Array();
 
@@ -78,17 +83,33 @@ $('#equipment-booking-form').submit(function(e) {
   		$("#error-list").append('<li style="color:red;">Please select an item of equipment for your booking.</li>');
   		errorCount = errorCount+1;
   	}
+  	if(who.length<1){
+  		$("#error-list").append('<li style="color:red;">Please enter the name of the person who is booking the equipment.</li>');
+  		errorCount = errorCount+1;
+  	}
 
 if(errorCount > 0){
 	return false;
 }
 
-$.post("includes/addBooking_db.php", {dateFrom: dateFrom, dateTo: dateTo, reason: reason, checkedEquipment: checkedEquipment}).done(function(data) {
+$.post("includes/addBooking_db.php", {dateFrom: dateFrom, dateTo: dateTo, who: who, reason: reason, checkedEquipment: checkedEquipment}).done(function(data) {
 
 			$.post("includes/calendar.php").done(function(data) {
 				$('#render-calendar').html(data);
 				initSystemFunctions();
 				$('#event-modal').modal('hide');
+
+				$("#from").val('');
+				$("#to").val('');
+				$("#reason").val('');
+				$("#who").val('');
+
+				$(".hardware").prop("checked", false);
+
+
+
+
+
 			});
 
 
@@ -114,14 +135,14 @@ function initSystemFunctions() {
 	$(document).off("click");
 
 
-    // $('.modal').on('show', function () {
-    //   $('body').css({overflow:'hidden'});
-    // });
+    $('.modal').on('show', function () {
+      $('body').css({overflow:'hidden'});
+    });
 
-    // $('.modal').on('hide', function () {
-    //   $('body').css({overflow:'auto'});
+    $('.modal').on('hide', function () {
+      $('body').css({overflow:'auto'});
 
-    // });
+    });
 
 
 		// $(document).on("click", "#make-booking", function(){
