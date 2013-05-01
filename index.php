@@ -82,9 +82,9 @@ if ($res) {
           <fieldset>
 
             <label>From:</label>
-            <input type="text" name="from" id="from" placeholder="" class="text input-datepicker" readonly>
+            <input type="text" name="from" id="from" placeholder="" class="text input-datepicker">
             <label>To:</label>
-            <input type="text" name="to" id="to" placeholder="" class="text input-datepicker" readonly>
+            <input type="text" name="to" id="to" placeholder="" class="text input-datepicker">
             <label>Booked by:</label>
             <input class="input-xlarge" type="text" name="who" id="who" placeholder="Booked by:">
           <label>Reason:</label>

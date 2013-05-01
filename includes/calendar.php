@@ -59,7 +59,8 @@ function draw_calendar($month,$year){
 			$sqlDate = date("Y-m-d", mktime(0, 0, 0, $month, $list_day, $year));
 
 
-			if ($result = $mysqli->query("SELECT * FROM `bookings` WHERE (`start` = '".$sqlDate."' OR `end` = '".$sqlDate."') OR (`start` < '".$sqlDate."' AND `end` > '".$sqlDate."')")) {
+			if ($result = $mysqli->query("SELECT * FROM `bookings` WHERE `hardwareId` <> 0 AND (`start` = '".$sqlDate."' OR `end` = '".$sqlDate."') OR (`start` < '".$sqlDate."' AND `end` > '".$sqlDate."')")) {
+
 				if ($result->num_rows > 0) {
 					while ($row = $result->fetch_assoc()) {
 				    	$calendar.= '<span class="label label-info event" data-eventid="'.$row['id'].'">'.$hardwareArray[$row['hardwareId']].'</span><br>';

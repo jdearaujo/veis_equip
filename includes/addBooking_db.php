@@ -10,7 +10,7 @@ if($_POST['dateTo'] == ''){
 }
 
 foreach ($_POST['checkedEquipment'] as $value) {
-
+	echo $value.' -- <br>';
 	$mysqli->query("INSERT INTO `bookings` (`hardwareId`, `start`,`end`,`who`,`where`) VALUES ('".$value."', '".$_POST['dateFrom']."', '".$_POST['dateTo']."', '".addslashes($_POST['who'])."', '".addslashes($_POST['reason'])."')");
 }
 

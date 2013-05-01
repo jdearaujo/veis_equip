@@ -61,10 +61,18 @@ $('#equipment-booking-form').submit(function(e) {
 
   var checkedEquipment = new Array();
 
+  var counter=0;
+
   	$("input:checkbox[name=hardware]:checked").each(function()
+  	// $("input.hardware:checked").each(function()
 	{
-    	checkedEquipment[$(this).val()] = $(this).val();
+			// alert($(this).attr('id'));
+    		// checkedEquipment[$(this).val()] = $(this).val();
+    		checkedEquipment[counter] = $(this).val();
+    		++counter;
+
 	});
+
 
   	var errorCount = 0;
 
@@ -92,9 +100,13 @@ if(errorCount > 0){
 	return false;
 }
 
+
+
 $.post("includes/addBooking_db.php", {dateFrom: dateFrom, dateTo: dateTo, who: who, reason: reason, checkedEquipment: checkedEquipment}).done(function(data) {
 
 			$.post("includes/calendar.php").done(function(data) {
+
+
 				$('#render-calendar').html(data);
 				initSystemFunctions();
 				$('#event-modal').modal('hide');
