@@ -14,8 +14,14 @@ if($_POST['dateTo'] == ''){
 	$_POST['dateTo'] = $_POST['dateFrom'];
 }
 
+// echo $_POST['dateFrom'].' - '.$_POST['dateTo'];
 
-$mysqli->real_query("SELECT * FROM `bookings` WHERE (`start` = '".$_POST['dateFrom']."' OR `end` = '".$_POST['dateTo']."') OR (`start` >= '".$_POST['dateFrom']."' AND `end` <= '".$_POST['dateTo']."')");
+
+// $mysqli->real_query("SELECT * FROM `bookings` WHERE (`start` = '".$_POST['dateFrom']."' OR `end` = '".$_POST['dateTo']."') OR (`start` >= '".$_POST['dateFrom']."' AND `end` <= '".$_POST['dateTo']."')");
+
+$mysqli->real_query("SELECT * FROM `bookings` WHERE (`start` = '".$_POST['dateFrom']."' OR `end` = '".$_POST['dateTo']."') OR (`start` BETWEEN '".$_POST['dateFrom']."' AND '".$_POST['dateTo']."') OR (`end` BETWEEN '".$_POST['dateFrom']."' AND '".$_POST['dateTo']."')");
+
+//$mysqli->real_query("SELECT * FROM `bookings` WHERE (`start` = '".$_POST['dateFrom']."' OR `end` = '".$_POST['dateTo']."') OR (`start` >= '".$_POST['dateFrom']."' AND `end` <= '".$_POST['dateTo']."')");
 $res = $mysqli->use_result();
 
 
